@@ -41,10 +41,10 @@ If you want to transfer your save(s) from the official mobile version(s), the **
 * Run the MINGW64 prompt (from the windows Start Menu/MSYS2 64-bit/MSYS2 MinGW 64-bit), when the program starts enter `pacman -Syuu` in the prompt and hit Enter.
 * Press `Y` when it asks if you want to update packages. If it asks you to close the prompt, do so, then restart it and run the same command again. This updates the packages to their latest versions.
 * Install the dependencies with the following command: `pacman -S pkg-config make git mingw-w64-i686-gcc mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-libogg mingw-w64-x86_64-libvorbis mingw-w64-x86_64-glew`
-* Clone the repo with the following command: `git clone --recursive https://github.com/Rubberduckycooly/Sonic-1-2-2013-Decompilation.git`
-* Go into the repo you just cloned with `cd Sonic-1-2-2013-Decompilation`.
+* Clone the repo with the following command: `git clone --recursive https://github.com/c0des1ayr/ForeverRSDKv4-1.3.git`
+* Go into the repo you just cloned with `cd ForeverRSDKv4-1.3`.
 * Run `make -f Makefile.msys2 CXX=x86_64-w64-mingw32-g++ CXXFLAGS=-static -j4`.
-  * -j switch is optional, but will make building faster by running it parallel on multiple cores (8 cores would be -j9).
+  * -j switch is optional, but will make building faster by running it parallel on multiple cores (8 cores would be -j8).
 
 ## Windows UWP (Phone, Xbox, etc.)
 * Clone the repo, then follow the instructions in the [depencencies readme for Windows](./dependencies/windows/dependencies.txt) and [depencencies readme for UWP](./dependencies/windows-uwp/dependencies.txt) to setup dependencies.
@@ -57,11 +57,11 @@ If you want to transfer your save(s) from the official mobile version(s), the **
   * Ubuntu (Mint, Pop!_OS, etc...): `sudo apt install build-essential git libsdl2-dev libvorbis-dev libogg-dev libglew-dev`
     * If you're using Debian, add `libgbm-dev` and `libdrm-dev`.
   * Arch Linux: `sudo pacman -S base-devel git sdl2 libvorbis libogg glew`
-  * Clone the repo and its other dependencies with the following command: `git clone --recursive https://github.com/Rubberduckycooly/Sonic-1-2-2013-Decompilation.git`
-  * Go into the repo you just cloned with `cd Sonic-1-2-2013-Decompilation`.
-  * Run `make -j5`.
+  * Clone the repo and its other dependencies with the following command: `git clone --recursive https://github.com/c0des1ayr/ForeverRSDKv4-1.3.git`
+  * Go into the repo you just cloned with `cd ForeverRSDKv4-1.3`.
+  * Run `make -j4`.
     * If your distro is using gcc 8.x.x, then add the argument `LIBS=-lstdc++fs`.
-    * -j switch is optional, but will make building faster by running it parallel on multiple cores (8 cores would be -j9).
+    * -j switch is optional, but will make building faster by running it parallel on multiple cores (8 cores would be -j8).
 
 ## Mac
 * Clone the repo, follow the instructions in the [depencencies readme for Mac](./dependencies/mac/dependencies.txt) to setup dependencies, then build via the Xcode project.
@@ -90,7 +90,7 @@ If you're able to, you can clone this repo and port it to a platform not on the 
 
 # Server
 The multiplayer server requires Python 3.8 or later. You can download Python [here](https://www.python.org/downloads/).
-To use the server, open Command Prompt in the folder [Server.py](https://github.com/Rubberduckycooly/Sonic-1-2-2013-Decompilation/blob/main/Server/Server.py) is located in, then run the command `py -3 Server.py [local IPv4 address] [port] debug`. You can find your local IPv4 address using the command `ipconfig`.
+To use the server, open Command Prompt in the folder [Server.py](https://github.com/c0des1ayr/ForeverRSDKv4-1.3/blob/forever/Server/Server.py) is located in, then run the command `py -3 Server.py [local IPv4 address] [port] debug`. You can find your local IPv4 address using the command `ipconfig`.
 Note that the CPP server found in the Server folder in the repo has been deprecated and no longer works. It has been kept in the repo for reference purposes.
 
 # FAQ
