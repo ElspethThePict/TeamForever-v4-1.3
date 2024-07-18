@@ -4610,7 +4610,7 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
             case FUNC_DRAWSPRITEFX:
                 opcodeSize  = 0;
                 spriteFrame = &scriptFrames[scriptInfo->frameListOffset + scriptEng.operands[0]];
-                // RSDKv4 reverted to the switch below *specifically* because DrawSpriteAllEffect doesn't play well with other platforms, most notably Linux.
+                // RSDKv4 reverted to the switch below *specifically* because DrawpSpriteAllEffect doesn't play well with other platforms, most notably Linux.
                 /*
                 DrawSpriteAllEffect(entity->direction, (scriptEng.operands[2] >> 16) - xScrollOffset,
                                            (scriptEng.operands[3] >> 16) - yScrollOffset, -spriteFrame->pivotX, -spriteFrame->pivotY,
@@ -4716,7 +4716,7 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
             case FUNC_DRAWSPRITESCREENFX:
                 opcodeSize  = 0;
                 spriteFrame = &scriptFrames[scriptInfo->frameListOffset + scriptEng.operands[0]];
-                // RSDKv4 reverted to the switch below *specifically* because DrawSpriteAllEffect doesn't play well with other platforms, most notably Linux.
+                // RSDKv4 reverted to the switch below *specifically* because DrawpSpriteAllEffect doesn't play well with other platforms, most notably Linux.
                 /*
                 DrawSpriteAllEffect(entity->direction, scriptEng.operands[2], scriptEng.operands[3], -spriteFrame->pivotX,
                                            -spriteFrame->pivotY, spriteFrame->sprX, spriteFrame->sprY, spriteFrame->width, spriteFrame->height,
