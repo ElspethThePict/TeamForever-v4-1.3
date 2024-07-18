@@ -90,7 +90,7 @@ If you're able to, you can clone this repo and port it to a platform not on the 
 
 # Server
 The multiplayer server requires Python 3.8 or later. You can download Python [here](https://www.python.org/downloads/).
-To use the server, open Command Prompt in the folder [Server.py](https://github.com/c0des1ayr/ForeverRSDKv4-1.3/blob/main/Server/Server.py) is located in, then run the command `py -3 Server.py [local IPv4 address] [port] debug`. You can find your local IPv4 address using the command `ipconfig`.
+To use the server, open Command Prompt in the folder [Server.py](https://github.com/c0des1ayr/ForeverRSDKv4-1.3/blob/forever/Server/Server.py) is located in, then run the command `py -3 Server.py [local IPv4 address] [port] debug`. You can find your local IPv4 address using the command `ipconfig`.
 Note that the CPP server found in the Server folder in the repo has been deprecated and no longer works. It has been kept in the repo for reference purposes.
 
 # FAQ
