@@ -67,6 +67,11 @@ CXXFLAGS_ALL += $(CXXFLAGS) \
 LDFLAGS_ALL = $(LDFLAGS)
 LIBS_ALL += -pthread $(LIBS)
 
+ifneq ($(FORCE_CASE_INSENSITIVE),)
+	CXXFLAGS_ALL += -DFORCE_CASE_INSENSITIVE
+	SOURCES += RSDKv4/fcaseopen.c
+endif
+
 ifeq ($(PROFILE),1)
 	CXXFLAGS_ALL += -pg -g -fno-inline-functions -fno-inline-functions-called-once -fno-optimize-sibling-calls -fno-default-inline
 endif
@@ -114,9 +119,6 @@ SOURCES = \
     RSDKv4/main         \
     RSDKv4/NativeObjects/All                \
     dependencies/all/tinyxml2/tinyxml2
-
-CXXFLAGS_ALL += -DFORCE_CASE_INSENSITIVE
-SOURCES += RSDKv4/fcaseopen
 
 PKGSUFFIX ?= $(SUFFIX)
 
