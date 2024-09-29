@@ -33,7 +33,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Forever-Absolute_Windows-32x
+          name: s1fs2a_Windows-32x
           path: artifacts
   Forever-Absolute_Windows-64x:
     runs-on: windows-latest
