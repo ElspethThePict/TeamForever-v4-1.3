@@ -57,6 +57,7 @@ jobs:
         with:
           name: s1fs2a_Windows-64x
           path: artifacts
+
  Forever-Absolute_Android:
     runs-on: windows-latest
     steps:
