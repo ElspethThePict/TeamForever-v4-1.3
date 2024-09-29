@@ -1,8 +1,8 @@
-name: Build Forever/Absolute (CMake)
+name: Build WZ+ (CMake)
 on:
   push:
     branches:
-      - foreve
+      - main
 
 env:
   # Normally you would use $VCPKG_INSTALLATION_PATH, but it's broken...so hardcode C:/vcpkg
@@ -13,7 +13,7 @@ env:
   GENERAL_LINUX_FLAGS: "-DCMAKE_CXX_FLAGS='-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0'"
 
 jobs:
-  Forever-Absolute_Windows-32x:
+  WZ_Windows-32x:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -22,7 +22,7 @@ jobs:
           submodules: recursive
       - name: Install dependencies
         run: vcpkg install glew sdl2 libogg libvorbis libtheora --triplet=x86-windows-static
-      - name: Build Forever/Absolute Windows 32x
+      - name: Build WZ+ Windows 32x
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_WIN_FLAGS}} ${{env.WIN32_FLAGS}}
           cmake --build build --parallel --config Release
@@ -33,9 +33,9 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: s1fs2a_Windows-32x
+          name: WZ+_Windows-32x
           path: artifacts
-  Forever-Absolute_Windows-64x:
+  WZ_Windows-64x:
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
           submodules: recursive
       - name: Install dependencies
         run: vcpkg install glew sdl2 libogg libvorbis libtheora --triplet=x64-windows-static
-      - name: Build Forever/Absolute Windows 64x
+      - name: Build WZ+ Windows 64x
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_WIN_FLAGS}} ${{env.WIN64_FLAGS}}
           cmake --build build --parallel --config Release
@@ -55,10 +55,10 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: s1fs2a_Windows-64x
+          name: WZ+_Windows-64x
           path: artifacts
 
- Forever-Absolute_Android:
+  WZ_Android:
     runs-on: windows-latest
     steps:
       - name: Checkout repository Android
@@ -98,16 +98,16 @@ jobs:
         with:
           distribution: "zulu"
           java-version: 11
-      - name: Build Forever/Absolute Android
+      - name: Build WZ+ Android
         working-directory: ./android
         run: |
           ./gradlew.bat assembleDebug --no-daemon -PABIFILTERS="armeabi-v7a;arm64-v8a" -PRETRO_DISABLE_PLUS
       - name: Upload artifact Android
         uses: actions/upload-artifact@v4
         with:
-          name: s1fs2a_Android
+          name: WZ+_Android
           path: ./android/app/build/outputs/apk
-  Forever-Absolute_Ubuntu:
+  WZ_Ubuntu:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -118,7 +118,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install build-essential git libsdl2-dev libtheora-dev libogg-dev libvorbis-dev libglew-dev
-      - name: Build Forever/Absolute Ubuntu
+      - name: Build WZ+ Ubuntu
         run: |
           cmake -B build ${{env.GENERAL_FLAGS}} ${{env.GENERAL_LINUX_FLAGS}}
           cmake --build build --parallel
@@ -133,5 +133,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: s1fs2a_Ubuntu
+          name: WZ+_Ubuntu
           path: linux.tar.gz
