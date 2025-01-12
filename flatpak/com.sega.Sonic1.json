@@ -19,10 +19,10 @@
             "name": "sonic1",
             "no-autogen": true,
             "make-args": [
-                "prefix=/app",
+                "prefix=/app"
             ],
             "make-install-args": [
-                "prefix=/app",
+                "prefix=/app"
             ],
             "post-install": [
                 "install -Dp -m 644 com.sega.Sonic1.desktop /app/share/applications/com.sega.Sonic1.desktop",
@@ -32,8 +32,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/NaqGuug/TeamForever-v4-1.3.git",
-                    "branch": "flatpak-fix"
+                    "url": "https://github.com/ElspethThePict/TeamForever-v4-1.3.git",
+                    "branch": "foreve"
                 },
                 {
                     "type": "file",
