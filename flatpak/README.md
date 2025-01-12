@@ -25,7 +25,7 @@ Once you have one, move the Data.rsdk to ```~/.var/app/com.sega.Sonic1/```
 **To install scripts, run:**
 ```
 git clone https://github.com/RSDKModding/RSDKv4-Script-Decompilation.git && cd RSDKv4-Script-Decompilation/
-mv "Sonic 1/Scripts/ ~/.var/app/com.sega.Sonic1/"
+mv "Sonic 1/Scripts/" ~/.var/app/com.sega.Sonic1/
 ```
 
 **To install mod assets, run:**
@@ -49,13 +49,13 @@ $ flatpak-builder --user --install --force-clean sonic2 com.sega.Sonic2.json
 Run the game once for the next steps.
 
 
-To get Data.rsdk, buy Android APK for the game from https://www.sega.com/games/sonic-hedgehog.
+To get Data.rsdk, buy Android APK for the game from https://www.sega.com/games/sonic-hedgehog2.
 Once you have one, move the Data.rsdk to ```~/.var/app/com.sega.Sonic2/```
 
 **To install scripts, run:**
 ```
 git clone https://github.com/RSDKModding/RSDKv4-Script-Decompilation.git && cd RSDKv4-Script-Decompilation/
-mv "Sonic 2/Scripts/ ~/.var/app/com.sega.Sonic2/"
+mv "Sonic 2/Scripts/" ~/.var/app/com.sega.Sonic2/
 ```
 
 **To install mod assets, run:**
