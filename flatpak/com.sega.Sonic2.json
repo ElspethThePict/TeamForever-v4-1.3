@@ -1,14 +1,15 @@
 {
     "app-id": "com.sega.Sonic2",
     "runtime": "org.freedesktop.Platform",
-    "runtime-version": "21.08",
+    "runtime-version": "23.08",
     "sdk": "org.freedesktop.Sdk",
-    "command": "RSDKv4",
+    "command": "s1fs2a",
     "finish-args": [
         "--share=ipc",
         "--socket=x11",
         "--socket=wayland",
         "--socket=pulseaudio",
+        "--persist=.",
         "--device=all"
     ],
     "modules": [
@@ -18,16 +19,12 @@
             "name": "sonic2",
             "no-autogen": true,
             "make-args": [
-                "prefix=/app",
-                "BASE_PATH=/app/share/sonic2/"
+                "prefix=/app"
             ],
             "make-install-args": [
-                "prefix=/app",
-                "BASE_PATH=/app/share/sonic2/"
+                "prefix=/app"
             ],
             "post-install": [
-                "unzip -j sonic2.apk assets/Data.rsdk.xmf",
-                "install -Dp -m 644 Data.rsdk.xmf /app/share/sonic2/Data.rsdk",
                 "install -Dp -m 644 com.sega.Sonic2.desktop /app/share/applications/com.sega.Sonic2.desktop",
                 "install -Dp -m 644 com.sega.Sonic2.svg /app/share/icons/hicolor/256x256/apps/com.sega.Sonic2.svg",
                 "install -Dp -m 644 com.sega.Sonic2.appdata.xml /app/share/appdata/com.sega.Sonic2.appdata.xml"
@@ -35,12 +32,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/Rubberduckycooly/Sonic-1-2-2013-Decompilation.git",
-                    "branch": "main"
-                },
-                {
-                    "type": "file",
-                    "path": "sonic2.apk"
+                    "url": "https://github.com/ElspethThePict/TeamForever-v4-1.3.git",
+                    "branch": "foreve"
                 },
                 {
                     "type": "file",

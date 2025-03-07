@@ -156,5 +156,8 @@ else
 all: $(PKGPATH)
 endif
 
+install: $(BINPATH)
+	install -Dp -m755 $(BINPATH) $(prefix)/bin/$(NAME)$(SUFFIX)
+
 clean:
 	rm -rf $(OBJDIR) && rm -rf $(BINPATH)
