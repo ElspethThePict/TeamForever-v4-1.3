@@ -9,10 +9,13 @@
 //changing DrawFXFlags so they can be merged with binary
 #define FX_FLIP (1)
 #define FX_ROTATE (2)
-#define FX_SCALE (4)
-#define FX_ROTOZOOM (6)
-#define FX_INK (8)
-#define FX_TINT (16)
+#define FX_HSCALE (4)
+#define FX_VSCALE (8)
+#define FX_SCALE (13) //scale applies hscale, vscale AND flip (but only horizontally? TODO perhaps?
+#define FX_ROTOZOOM (15)
+#define FX_INK (16)
+#define FX_ALL (31) //ignore tint - it's unused
+#define FX_TINT (32)
 enum FlipFlags { FLIP_NONE, FLIP_X, FLIP_Y, FLIP_XY };
 enum InkFlags { INK_NONE, INK_BLEND, INK_ALPHA, INK_ADD, INK_SUB };
 //3D drawing still uses these but I changed the names
