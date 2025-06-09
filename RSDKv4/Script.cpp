@@ -4407,20 +4407,16 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
             case FUNC_DRAWACTNAME: {
                 opcodeSize = 0;
                 int charID = 0;
+				int wordoffset = 0;
                 switch (scriptEng.operands[3]) { // Draw Mode
-                    case 0:                      // Draw Word 1 (but aligned from the right instead of left)
+                    case 0: // Draw Word 1 right aligned
                         charID = 0;
-
-                        for (charID = 0;; ++charID) {
-                            int nextChar = titleCardText[charID + 1];
-                            if (nextChar == '-' || !nextChar)
-                                break;
-                        }
-
-                        while (charID >= 0) {
+						
+						//Do a dummy run to get the length
+                        if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0) {
                             int character = titleCardText[charID];
                             if (character == ' ')
-                                character = -1; // special space char
+                                character = -1;
                             if (character == '-')
                                 character = 0;
                             if (character >= '0' && character <= '9')
@@ -4429,22 +4425,99 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
                                 character -= 'A';
 
                             if (character <= -1) {
-                                scriptEng.operands[1] -= scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                                wordoffset += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
                             }
                             else {
                                 character += scriptEng.operands[0];
                                 spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                wordoffset += spriteFrame->width + scriptEng.operands[6];
+                            }
 
-                                scriptEng.operands[1] -= spriteFrame->width + scriptEng.operands[6];
+                            scriptEng.operands[0] += 26;
+                            charID++;
+                        }
 
+                        while (titleCardText[charID] != 0 && titleCardText[charID] != '-') {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = -1;
+                            if (character == '-')
+                                character = 0;
+                            if (character > '/' && character < ':')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                wordoffset += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                wordoffset += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            charID++;
+                        }
+						//Shift left by the calculated amount, and reset for the next run
+						scriptEng.operands[1] -= wordoffset;
+						charID = 0;
+						if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0)
+							scriptEng.operands[0] -= 26;
+						
+                        // Draw the first letter as a capital letter, the rest are lowercase (if scriptEng.operands[4] is true, otherwise they're all
+                        // uppercase)
+                        if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0) {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = -1;
+                            if (character == '-')
+                                character = 0;
+                            if (character >= '0' && character <= '9')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                scriptEng.operands[1] += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
                                 DrawSprite(scriptEng.operands[1] + spriteFrame->pivotX, scriptEng.operands[2] + spriteFrame->pivotY,
                                            spriteFrame->width, spriteFrame->height, spriteFrame->sprX, spriteFrame->sprY, scriptInfo->spriteSheetID);
+                                scriptEng.operands[1] += spriteFrame->width + scriptEng.operands[6];
                             }
-                            charID--;
+
+                            scriptEng.operands[0] += 26;
+                            charID++;
+                        }
+
+                        while (titleCardText[charID] != 0 && titleCardText[charID] != '-') {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = -1;
+                            if (character == '-')
+                                character = 0;
+                            if (character > '/' && character < ':')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                scriptEng.operands[1] += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                DrawSprite(scriptEng.operands[1] + spriteFrame->pivotX, scriptEng.operands[2] + spriteFrame->pivotY,
+                                           spriteFrame->width, spriteFrame->height, spriteFrame->sprX, spriteFrame->sprY, scriptInfo->spriteSheetID);
+                                scriptEng.operands[1] += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            charID++;
                         }
                         break;
 
-                    case 1: // Draw Word 1
+                    case 1: // Draw Word 1 left aligned
                         charID = 0;
 
                         // Draw the first letter as a capital letter, the rest are lowercase (if scriptEng.operands[4] is true, otherwise they're all
@@ -4500,8 +4573,115 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
                         }
                         break;
 
-                    case 2: // Draw Word 2
+                    case 2: // Draw Word 2 left aligned
                         charID = titleCardWord2;
+
+                        // Draw the first letter as a capital letter, the rest are lowercase (if scriptEng.operands[4] is true, otherwise they're all
+                        // uppercase)
+                        if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0) {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = 0;
+                            if (character == '-')
+                                character = 0;
+                            if (character >= '0' && character <= '9')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                scriptEng.operands[1] += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                DrawSprite(scriptEng.operands[1] + spriteFrame->pivotX, scriptEng.operands[2] + spriteFrame->pivotY,
+                                           spriteFrame->width, spriteFrame->height, spriteFrame->sprX, spriteFrame->sprY, scriptInfo->spriteSheetID);
+                                scriptEng.operands[1] += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            scriptEng.operands[0] += 26;
+                            charID++;
+                        }
+
+                        while (titleCardText[charID] != 0) {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = 0;
+                            if (character == '-')
+                                character = 0;
+                            if (character >= '0' && character <= '9')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                scriptEng.operands[1] += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                DrawSprite(scriptEng.operands[1] + spriteFrame->pivotX, scriptEng.operands[2] + spriteFrame->pivotY,
+                                           spriteFrame->width, spriteFrame->height, spriteFrame->sprX, spriteFrame->sprY, scriptInfo->spriteSheetID);
+                                scriptEng.operands[1] += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            charID++;
+                        }
+                        break;
+
+                    case 3: // Draw Word 2 right aligned
+                        charID = titleCardWord2;
+						
+						//another dummy run for the length
+						if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0) {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = 0;
+                            if (character == '-')
+                                character = 0;
+                            if (character >= '0' && character <= '9')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                wordoffset += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                wordoffset += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            scriptEng.operands[0] += 26;
+                            charID++;
+                        }
+
+                        while (titleCardText[charID] != 0) {
+                            int character = titleCardText[charID];
+                            if (character == ' ')
+                                character = 0;
+                            if (character == '-')
+                                character = 0;
+                            if (character >= '0' && character <= '9')
+                                character -= 22;
+                            if (character > '9' && character < 'f')
+                                character -= 'A';
+
+                            if (character <= -1) {
+                                wordoffset += scriptEng.operands[5] + scriptEng.operands[6]; // spaceWidth + spacing
+                            }
+                            else {
+                                character += scriptEng.operands[0];
+                                spriteFrame = &scriptFrames[scriptInfo->frameListOffset + character];
+                                wordoffset += spriteFrame->width + scriptEng.operands[6];
+                            }
+                            charID++;
+                        }
+						
+						//Shift left by the calculated amount, and reset for the next run
+						scriptEng.operands[1] -= wordoffset;
+						charID = titleCardWord2;
+						if (scriptEng.operands[4] == 1 && titleCardText[charID] != 0)
+							scriptEng.operands[0] -= 26;
 
                         // Draw the first letter as a capital letter, the rest are lowercase (if scriptEng.operands[4] is true, otherwise they're all
                         // uppercase)
