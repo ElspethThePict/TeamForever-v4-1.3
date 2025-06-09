@@ -3673,7 +3673,7 @@ void DrawSpriteRotozoom(int direction, int XPos, int YPos, int pivotX, int pivot
 #endif
 }
 
-void DrawSpriteAllEffect(int direction, int XPos, int YPos, int pivotX, int pivotY, int sprX, int sprY, int width, int height, int rotation, int scale,
+void DrawSpriteAllFX(int direction, int XPos, int YPos, int pivotX, int pivotY, int sprX, int sprY, int width, int height, int rotation, int scale,
                         int sheetID, int alpha, int ink, int flags)
 {
 #if RETRO_SOFTWARE_RENDER
@@ -4364,21 +4364,21 @@ void DrawObjectAnimation(void *objScr, void *ent, int XPos, int YPos)
 
     switch (sprAnim->rotationStyle) {
         case ROTSTYLE_NONE:
-			DrawSpriteAllEffect(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
+			DrawSpriteAllFX(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
 							 0, entity->scale, frame->sheetID, entity->alpha, entity->inkEffect, FX_ALL - FX_ROTATE);
             break;
 
         case ROTSTYLE_FULL:
-			DrawSpriteAllEffect(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
+			DrawSpriteAllFX(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
 							 entity->rotation, entity->scale, frame->sheetID, entity->alpha, entity->inkEffect, FX_ALL);
             break;
 
         case ROTSTYLE_45DEG:
             if (entity->rotation >= 0x100)
-                DrawSpriteAllEffect(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
+                DrawSpriteAllFX(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
 							 0x200 - ((0x214 - entity->rotation) >> 6 << 6), entity->scale, frame->sheetID, entity->alpha, entity->inkEffect, FX_ALL);
 			else
-                DrawSpriteAllEffect(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
+                DrawSpriteAllFX(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
 							 (entity->rotation + 20) >> 6 << 6, entity->scale, frame->sheetID, entity->alpha, entity->inkEffect, FX_ALL);
 			break;
 
@@ -4442,7 +4442,7 @@ void DrawObjectAnimation(void *objScr, void *ent, int XPos, int YPos)
             }
 
             frame = &animFrames[sprAnim->frameListOffset + frameID];
-            DrawSpriteAllEffect(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
+            DrawSpriteAllFX(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width, frame->height,
 							 rotation, entity->scale, frame->sheetID, entity->alpha, entity->inkEffect, FX_ALL);
             // DrawSpriteRotozoom(entity->direction, XPos, YPos, -frame->pivotX, -frame->pivotY, frame->sprX, frame->sprY, frame->width,
             // frame->height,

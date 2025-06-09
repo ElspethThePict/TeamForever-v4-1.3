@@ -4910,7 +4910,7 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
                         }
                         break;
                     default: //Anything those can't handle goes to the all-in-one function
-						DrawSpriteAllEffect(entity->direction, (scriptEng.operands[2] >> 16) - xScrollOffset,
+						DrawSpriteAllFX(entity->direction, (scriptEng.operands[2] >> 16) - xScrollOffset,
 									     (scriptEng.operands[3] >> 16) - yScrollOffset, -spriteFrame->pivotX, -spriteFrame->pivotY,
 									     spriteFrame->sprX, spriteFrame->sprY, spriteFrame->width, spriteFrame->height, entity->rotation,
 									     entity->scale, scriptInfo->spriteSheetID, entity->alpha, entity->inkEffect, scriptEng.operands[1]);
@@ -5012,7 +5012,7 @@ void ProcessScript(int scriptCodePtr, int jumpTablePtr, byte scriptEvent)
                         }
                         break;
                     default: //Anything those can't handle goes to the all-in-one function
-						DrawSpriteAllEffect(entity->direction, scriptEng.operands[2], scriptEng.operands[3], -spriteFrame->pivotX,
+						DrawSpriteAllFX(entity->direction, scriptEng.operands[2], scriptEng.operands[3], -spriteFrame->pivotX,
 									     -spriteFrame->pivotY, spriteFrame->sprX, spriteFrame->sprY, spriteFrame->width, spriteFrame->height,
 									     entity->rotation, entity->scale, scriptInfo->spriteSheetID, entity->alpha, entity->inkEffect, scriptEng.operands[1]);
 						break;
